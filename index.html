@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R2DS</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabbed Interface with Modular JS</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
+  <!-- Logo Header -->
+  <div id="header"></div>
 
-    <!-- Logo header -->
-    <div id="header"></div>
+  <!-- Tabs -->
+  <div id="tabs">
+    <button class="tab active" data-tab="home">Home</button>
+    <button class="tab" data-tab="about">About</button>
+    <button class="tab" data-tab="services">Services</button>
+    <button class="tab" data-tab="portfolio">Portfolio</button>
+    <button class="tab" data-tab="contact">Contact</button>
+  </div>
 
-    <!-- Tab navigation -->
-    <div id="tabs">
-        <div class="tab">Home</div>
-        <div class="tab">About</div>
-        <div class="tab">Services</div>
-        <div class="tab">Portfolio</div>
-        <div class="tab">Contact</div>
-      </div>
-      
-      <div id="content">
-        <div id="calendar-heatmap"></div> <!-- This is where the calendar will be rendered -->
-      </div>
-      
-      <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Ensure D3.js is included -->
-      <script src="app.js"></script> <!-- Your JavaScript file -->
-      
+  <!-- Content Container -->
+  <div id="content"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="tabs/home.js"></script>
+  <script src="tabs/about.js"></script>
+  <script src="tabs/services.js"></script>
+  <script src="tabs/portfolio.js"></script>
+  <script src="tabs/contact.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
-
-
-
