@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>D3.js Tabbed Layout</title>
+    <title>R2DS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="header">Your Logo Here</div>
-<div id="tabs"></div>
-<div id="content">Welcome! Click on a tab to see its content.</div>
+    <!-- Logo header -->
+    <div id="header"></div>
 
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="app.js"></script>
-
+    <!-- Tab navigation -->
+    <div id="tabs">
+        <div class="tab">Home</div>
+        <div class="tab">About</div>
+        <div class="tab">Services</div>
+        <div class="tab">Portfolio</div>
+        <div class="tab">Contact</div>
+      </div>
+      
+      <div id="content">
+        <div id="calendar-heatmap"></div> <!-- This is where the calendar will be rendered -->
+      </div>
+      
+      <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Ensure D3.js is included -->
+      <script src="app.js"></script> <!-- Your JavaScript file -->
+      
 </body>
 </html>
+
+
+

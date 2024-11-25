@@ -1,16 +1,23 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
+/* Logo header with full-width image */
 #header {
-    background-color: #007bff;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    font-size: 24px;
+    width: 100%;
+    height: 150px; /* Set height for the logo bar */
+    background-image: url('upscaled_logo_optimized.png'); /* Path to the upscaled logo */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
+    filter: brightness(1.1); /* Brighten the image slightly */
 }
 
+
+/* Tabs container */
 #tabs {
     display: flex;
     justify-content: center;
@@ -39,6 +46,22 @@ body {
     color: white;
 }
 
+/* Content container */
 #content {
     padding: 20px;
+    font-size: 16px;
+    text-align: center;
 }
+
+#calendar-heatmap {
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+
+svg {
+    width: 100%;
+    height: auto;
+}
+
