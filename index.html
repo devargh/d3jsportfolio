@@ -1,51 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>D3.js Page with 5 Sections</title>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    section {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-    }
-    #section1 { background-color: #f0f8ff; }
-    #section2 { background-color: #e6ffe6; }
-    #section3 { background-color: #fff0f5; }
-    #section4 { background-color: #fefbd8; }
-    #section5 { background-color: #f5f5dc; }
-    .chart {
-      width: 80%;
-      height: 80%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Tabbed Layout</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <section id="section1">
-    <div class="chart" id="chart1"></div>
-  </section>
-  <section id="section2">
-    <div class="chart" id="chart2"></div>
-  </section>
-  <section id="section3">
-    <div class="chart" id="chart3"></div>
-  </section>
-  <section id="section4">
-    <div class="chart" id="chart4"></div>
-  </section>
-  <section id="section5">
-    <div class="chart" id="chart5"></div>
-  </section>
-  <script src="app.js"></script>
+
+<div id="header">Your Logo Here</div>
+<div id="tabs"></div>
+<div id="content">Welcome! Click on a tab to see its content.</div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="app.js"></script>
+
 </body>
 </html>
-
