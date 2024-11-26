@@ -1,15 +1,42 @@
-function loadAboutTab(container) {
-    container.innerHTML = '<div id="sankey-chart"></div>';
-    renderSankeyChart();
-}
-  
-function renderSankeyChart() {
-    const sankeyChartDiv = document.getElementById("sankey-chart");
-    if (!sankeyChartDiv) {
-      console.error("sankey-chart div not found");
-      return;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sankey Diagram</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/d3-sankey@0.12.3/dist/d3-sankey.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
     }
-  
+
+    .link {
+      fill: none;
+      stroke-opacity: 0.5;
+      transition: stroke-opacity 0.2s ease-in-out;
+    }
+
+    .link.highlight {
+      stroke-opacity: 1 !important;
+    }
+
+    .node rect {
+      cursor: pointer;
+      transition: stroke 0.2s ease-in-out;
+    }
+
+    .node rect:hover {
+      stroke: black;
+      stroke-width: 2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sankey Diagram</h1>
+  <div id="chart"></div>
+
+  <script>
     const data = {
       nodes: [
         { name: "Net Import" },
@@ -74,50 +101,35 @@ function renderSankeyChart() {
         { source: 5, target: 6, value: 0.41 }
       ]
     };
-  
-    // Set dimensions
+
     const width = 960;
     const height = 500;
-  
-    // Create the Sankey layout
+
     const sankey = d3.sankey()
       .nodeWidth(15)
       .nodePadding(10)
       .extent([[1, 1], [width - 1, height - 5]]);
-  
-    // Compute the Sankey layout
+
     const sankeyData = sankey({
       nodes: data.nodes.map(d => Object.assign({}, d)),
       links: data.links.map(d => Object.assign({}, d))
     });
-  
-    // Define a color scale
+
     const color = d3.scaleOrdinal(d3.schemeCategory10);
-  
-    // Create an SVG container
-    const svg = d3.create("svg")
+
+    const svg = d3.select("#chart").append("svg")
       .attr("width", width)
       .attr("height", height);
-  
-    // Add links
+
     const link = svg.append("g")
       .selectAll("path")
       .data(sankeyData.links)
       .join("path")
       .attr("d", d3.sankeyLinkHorizontal())
-      .attr("fill", "none")
       .attr("stroke", d => color(d.source.name))
-      .attr("stroke-opacity", 0.5)
       .attr("stroke-width", d => Math.max(1, d.width))
-      .on("mouseover", function (event, d) {
-        link.attr("stroke-opacity", 0.1); // Dim all links
-        d3.select(this).attr("stroke-opacity", 1); // Highlight hovered link
-      })
-      .on("mouseout", function () {
-        link.attr("stroke-opacity", 0.5); // Reset all links to original opacity
-      });
-  
-    // Add nodes
+      .attr("class", "link");
+
     const node = svg.append("g")
       .selectAll("rect")
       .data(sankeyData.nodes)
@@ -128,28 +140,22 @@ function renderSankeyChart() {
       .attr("width", d => d.x1 - d.x0)
       .attr("fill", d => color(d.name))
       .on("mouseover", function (event, d) {
-        link.attr("stroke-opacity", 0.1); // Dim all links
+        link.classed("highlight", false); // Reset all highlights
         link.filter(l => l.source === d || l.target === d)
-          .attr("stroke-opacity", 1); // Highlight links connected to the node
+          .classed("highlight", true); // Highlight related links
       })
       .on("mouseout", function () {
-        link.attr("stroke-opacity", 0.5); // Reset all links to original opacity
+        link.classed("highlight", false); // Reset all highlights
       });
-  
-    // Add node labels
+
     svg.append("g")
       .selectAll("text")
       .data(sankeyData.nodes)
       .join("text")
       .attr("x", d => d.x0 - 6)
       .attr("y", d => (d.y1 + d.y0) / 2)
-      .attr("dy", "0.35em")
       .attr("text-anchor", "end")
-      .text(d => d.name)
-      .filter(d => d.x0 < width / 2)
-      .attr("x", d => d.x1 + 6)
-      .attr("text-anchor", "start");
-  
-    sankeyChartDiv.appendChild(svg.node());
-  }
-  
+      .text(d => d.name);
+  </script>
+</body>
+</html>
