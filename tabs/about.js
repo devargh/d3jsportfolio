@@ -110,14 +110,27 @@ function renderSankeyChart() {
       .attr("stroke-opacity", 0.5)
       .attr("stroke-width", d => Math.max(1, d.width))
       .on("mouseover", function (event, d) {
-        link.attr("stroke-opacity", 0.1); // Dim all links
-        d3.select(this).attr("stroke-opacity", 1); // Highlight hovered link
+        // Dim all nodes except the source and target
+        node.attr("fill", "#ccc");
+  
+        // Highlight the hovered link
+        d3.select(this).attr("stroke-opacity", 1);
+  
+        // Highlight the source and target nodes
+        d3.select(sankeyData.nodes[d.source.index].rect)
+          .attr("fill", d => color(d.name)); // Keep source node's original color
+
+        // Highlight the target node with its original color (no change)
+        d3.select(sankeyData.nodes[d.target.index].rect)
+          .attr("fill", d => color(d.name)); // Keep target node's original color
       })
       .on("mouseout", function () {
-        link.attr("stroke-opacity", 0.5); // Reset all links to original opacity
+        // Reset all links and nodes
+        link.attr("stroke-opacity", 0.5); // Reset all links
+        node.attr("fill", d => color(d.name)); // Reset node colors to original
       });
   
-    // Add nodes
+    // Add nodes and store reference to rect element
     const node = svg.append("g")
       .selectAll("rect")
       .data(sankeyData.nodes)
@@ -127,7 +140,12 @@ function renderSankeyChart() {
       .attr("height", d => d.y1 - d.y0)
       .attr("width", d => d.x1 - d.x0)
       .attr("fill", d => color(d.name))
+      .each(function (d) {
+        // Store the reference to the rect element in the node data
+        d.rect = this;
+      })
       .on("mouseover", function (event, d) {
+        // Highlight links connected to the hovered node
         link.attr("stroke-opacity", 0.1); // Dim all links
         link.filter(l => l.source === d || l.target === d)
           .attr("stroke-opacity", 1); // Highlight links connected to the node
