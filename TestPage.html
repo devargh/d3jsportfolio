@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Timeline without Slider</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #chart-container {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="chart-container"></div>
+
+  <script>
+    // Data for events
+    const data = [
+      { year: 2016, event: "Laser Interferometer Gravitational-Wave Observatory" },
+      { year: 2000, event: "Geocaching" },
+      { year: 1989, event: "World Wide Web" },
+      { year: 1973, event: "Graphical user interface" },
+      { year: 1956, event: "Hard disk drive" },
+      { year: 1946, event: "Ejector seat" },
+      { year: 1935, event: "Nylon" },
+      { year: 1913, event: "Karplan turbine" }
+    ];
+
+    const margin = { top: 20, right: 20, bottom: 50, left: 100 };
+    const width = 900 - margin.left - margin.right;
+    const height = 600 - margin.top - margin.bottom;
+
+    const svg = d3.create("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom);
+
+    const g = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // Adjusted scale to reverse the timeline (latest at the top)
+    const xScale = d3.scaleLinear()
+      .domain([1910, 2020])  // Time range for the vertical timeline
+      .range([height, 0]);    // Reverse the range to make latest years at the top
+
+    // Timeline positioned at 10% of the width
+    const timelineX = width * 0.1;
+
+    g.append("line")
+      .attr("x1", timelineX)
+      .attr("x2", timelineX)
+      .attr("y1", 0)
+      .attr("y2", height)
+      .attr("stroke", "#000")
+      .attr("stroke-width", 2);
+
+    // Draw year markers along the timeline
+    g.selectAll(".yearMarker")
+      .data(data)
+      .enter().append("circle")
+      .attr("class", "yearMarker")
+      .attr("cx", timelineX)  // All markers are aligned along the vertical line (10% of width)
+      .attr("cy", d => xScale(d.year))  // Position markers based on the year (latest years are at the top)
+      .attr("r", 5)  // Marker size
+      .style("fill", "steelblue");
+
+    // Display year labels on the left side of the timeline
+    g.selectAll(".yearLabel")
+      .data(data)
+      .enter().append("text")
+      .attr("class", "yearLabel")
+      .attr("x", timelineX - 20)  // Place year label on the left side of the timeline
+      .attr("y", d => xScale(d.year))  // Position the year vertically based on year
+      .attr("dy", 4)  // Slight vertical offset to avoid overlap with the marker
+      .attr("text-anchor", "end")  // Align text to the right for left positioning
+      .style("font-size", "12px")
+      .text(d => d.year);
+
+    // Display event names on the right side of the timeline
+    g.selectAll(".eventName")
+      .data(data)
+      .enter().append("text")
+      .attr("class", "eventName")
+      .attr("x", timelineX + 20)  // Place event name label on the right side of the timeline
+      .attr("y", d => xScale(d.year))  // Position the name vertically based on year
+      .attr("dy", 4)  // Slight vertical offset to avoid overlap with the marker
+      .attr("text-anchor", "start")  // Align text to the left for right positioning
+      .style("font-size", "12px")
+      .text(d => d.event);
+
+    // Axis for years positioned at 90% of the width
+    const axis = g.append("g")
+      .attr("transform", "translate(" + (width * 0.9) + ", 0)")  // Position the axis on the right side of the timeline
+      .call(d3.axisRight(xScale).tickFormat(d3.format("d")).ticks(data.length));
+
+    // Append the chart to the DOM
+    document.getElementById("chart-container").appendChild(svg.node());
+
+  </script>
+</body>
+</html>
