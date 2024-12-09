@@ -4,6 +4,7 @@ function loadHomeTab(container) {
     const baseURL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
       ? 'http://127.0.0.1:5000' : 'https://rsquareds.com';
 
+    console.log(baseURL);
 
     // Fetch data from the backend API using D3.js
     d3.json(`${baseURL}/api/home`) 
