@@ -2,7 +2,7 @@ function loadHomeTab(container) {
     container.innerHTML = '<div id="calendar-heatmap"></div>';
 
     const baseURL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
-      ? 'http://127.0.0.1:5000' : 'https://r2dev.pythonanywhere.com';
+      ? 'http://127.0.0.1:5000' : 'https://r2dev.pythonanywhere.com'; 
 
     console.log(baseURL);
 
