@@ -4,7 +4,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests
 
-@app.route('/api/home', methods=['GET'])
+@app.route('/home/details', methods=['GET'])
 def get_home():
     data = [
         { "date": "2023-07-01", "value": 19.1 },

@@ -7,7 +7,7 @@ function loadHomeTab(container) {
     console.log(baseURL);
 
     // Fetch data from the backend API using D3.js
-    d3.json(`${baseURL}/api/home`) 
+    d3.json(`${baseURL}/home/details`) 
         .then(data => {
           renderCalendarHeatmap(data);
         })
