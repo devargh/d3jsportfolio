@@ -1,8 +1,12 @@
 function loadHomeTab(container) {
     container.innerHTML = '<div id="calendar-heatmap"></div>';
 
+    const baseURL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
+      ? 'http://127.0.0.1:5000' : 'https://rsquareds.com';
+
+
     // Fetch data from the backend API using D3.js
-    d3.json('http://127.0.0.1:5000/api/home') 
+    d3.json(`${baseURL}/api/home`) 
         .then(data => {
           renderCalendarHeatmap(data);
         })
